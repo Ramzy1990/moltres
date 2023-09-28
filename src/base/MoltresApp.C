@@ -13,6 +13,7 @@ MoltresApp::validParams()
   params.set<bool>("use_legacy_uo_initialization") = false;
   params.set<bool>("use_legacy_uo_aux_computation") = false;
   params.set<bool>("use_legacy_output_syntax") = false;
+  params.set<bool>("use_legacy_material_output") = false;
 
   return params;
 }
@@ -21,8 +22,7 @@ MoltresApp::validParams()
 // dependent apps know about the MoltresApp label.
 registerKnownLabel("MoltresApp");
 
-MoltresApp::MoltresApp(InputParameters parameters)
-  : MooseApp(parameters)
+MoltresApp::MoltresApp(InputParameters parameters) : MooseApp(parameters)
 {
   MoltresApp::registerAll(_factory, _action_factory, _syntax);
 }
