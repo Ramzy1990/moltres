@@ -1547,7 +1547,7 @@
                                                             # parameters via control logic.
                                                             # Group: Advanced
         diag_save_in       =                                # The name of auxiliary variables to save this
-                                                            # BC's diagonal jacobian contributions to. 
+                                                            # BC's diagonal jacobian contributions to.
                                                             # Everything about that variable must match
                                                             # everything about this variable (the type,
                                                             # what blocks it's on, etc.)
@@ -7741,7 +7741,7 @@
                                      # This flag can be set on an individual modifier to force preperation
                                      # between modifiers where they might be needed.
         new_block_id   =             # Elements with the old block number (or name) will be given this block
-                                     # number.  You must supply either new_block_id or new_block_name. 
+                                     # number.  You must supply either new_block_id or new_block_name.
                                      # You may supply a vector of new_block_id, in which case the old_block
                                      # information must also be a vector.
         new_block_name =             # Elements with the old block number (or name) will be given this block
@@ -8194,7 +8194,7 @@
                                                             # parameters via control logic.
                                                             # Group: Advanced
         diag_save_in       =                                # The name of auxiliary variables to save this
-                                                            # BC's diagonal jacobian contributions to. 
+                                                            # BC's diagonal jacobian contributions to.
                                                             # Everything about that variable must match
                                                             # everything about this variable (the type,
                                                             # what blocks it's on, etc.)
@@ -12122,7 +12122,7 @@
         source_variable           = (required)                   # The variable to transfer from.
         type                      = MultiAppMeshFunctionTransfer
         use_displaced_mesh        = 0                            # Whether or not this object should use
-                                                                 # the displaced mesh for computation. 
+                                                                 # the displaced mesh for computation.
                                                                  # Note that in the case this is true but
                                                                  # no displacements are provided in the
                                                                  # Mesh block the undisplaced mesh will
@@ -12210,7 +12210,7 @@
         type                      = MultiAppPostprocessorInterpolationTransfer
         use_displaced_mesh        = 0                                          # Whether or not this object
                                                                                # should use the displaced
-                                                                               # mesh for computation. 
+                                                                               # mesh for computation.
                                                                                # Note that in the case this
                                                                                # is true but no displacements
                                                                                # are provided in the Mesh
@@ -12287,7 +12287,7 @@
                                                                   # reduce postprocessor values from multiple
                                                                   # SubApps to a single value
         to_postprocessor          = (required)                    # The name of the Postprocessor in the
-                                                                  # MultiApp to transfer the value to. 
+                                                                  # MultiApp to transfer the value to.
                                                                   # This should most likely be a Reporter
                                                                   # Postprocessor.
         type                      = MultiAppPostprocessorTransfer

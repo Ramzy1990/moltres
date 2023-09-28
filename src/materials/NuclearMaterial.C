@@ -65,7 +65,8 @@ NuclearMaterial::NuclearMaterial(const InputParameters & parameters)
   {
     if (_xsec_names[j].compare("GTRANSFXS") == 0)
       _vec_lengths[_xsec_names[j]] = _num_groups * _num_groups;
-    else if (_xsec_names[j].compare("BETA_EFF") == 0 || _xsec_names[j].compare("DECAY_CONSTANT") == 0)
+    else if (_xsec_names[j].compare("BETA_EFF") == 0 ||
+             _xsec_names[j].compare("DECAY_CONSTANT") == 0)
       _vec_lengths[_xsec_names[j]] = _num_precursor_groups;
     else
       _vec_lengths[_xsec_names[j]] = _num_groups;
@@ -89,7 +90,8 @@ NuclearMaterial::dummyComputeQpProperties()
     _d_remxs_d_temp[_qp][i] = _xsec_map["REMXS"][i][0];
     _d_fissxs_d_temp[_qp][i] = _xsec_map["FISSXS"][i][0];
     _d_nsf_d_temp[_qp][i] = _xsec_map["NSF"][i][0];
-    _d_fisse_d_temp[_qp][i] = _xsec_map["FISSE"][i][0] * 1e6 * 1.6e-19; // convert from MeV to Joules
+    _d_fisse_d_temp[_qp][i] =
+        _xsec_map["FISSE"][i][0] * 1e6 * 1.6e-19; // convert from MeV to Joules
     _d_diffcoef_d_temp[_qp][i] = _xsec_map["DIFFCOEF"][i][0];
     _d_recipvel_d_temp[_qp][i] = _xsec_map["RECIPVEL"][i][0];
     _d_chi_t_d_temp[_qp][i] = _xsec_map["CHI_T"][i][0];

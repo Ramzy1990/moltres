@@ -122,9 +122,9 @@ GenericMoltresMaterial::Construct(std::string & property_tables_root)
     _xsec_spline_interpolators[_xsec_names[j]].resize(o);
     _xsec_monotone_cubic_interpolators[_xsec_names[j]].resize(o);
 
-    if (_xsec_names[j]=="CHI_D" and not myfile.good())
+    if (_xsec_names[j] == "CHI_D" and not myfile.good())
     {
-      //chi_d backwards compatibility on unit tests:
+      // chi_d backwards compatibility on unit tests:
       for (decltype(o) k = 0; k < o; ++k)
         for (int i = 0; i < tempLength; ++i)
           _xsec_map["CHI_D"][k].push_back(0.0);
@@ -136,7 +136,8 @@ GenericMoltresMaterial::Construct(std::string & property_tables_root)
 
       if (!onewarn)
       {
-        mooseWarning("CHI_D data missing -> assume delayed neutrons born in top group for material" + _name);
+        mooseWarning(
+            "CHI_D data missing -> assume delayed neutrons born in top group for material" + _name);
         onewarn = true;
       }
       switch (_interp_type)
@@ -175,10 +176,12 @@ GenericMoltresMaterial::Construct(std::string & property_tables_root)
         {
           // Check if temperature values are in increasing order. Also errors out if wrong number
           // of data values are provided.
-          mooseError(
-              "The temperature values in the " + _file_map[_xsec_names[j]] + " files are not in "
-              "increasing order, or the number of " + _file_map[_xsec_names[j]] + " values does "
-              "not match the num_groups/num_precursor_groups parameter.");
+          mooseError("The temperature values in the " + _file_map[_xsec_names[j]] +
+                     " files are not in "
+                     "increasing order, or the number of " +
+                     _file_map[_xsec_names[j]] +
+                     " values does "
+                     "not match the num_groups/num_precursor_groups parameter.");
         }
         temperature.push_back(value);
         for (decltype(o) k = 0; k < o; ++k)
@@ -186,9 +189,9 @@ GenericMoltresMaterial::Construct(std::string & property_tables_root)
           myfile >> value;
           if (myfile.eof())
             // Check if insufficient number of data values are provided for interp_type=none
-            mooseError(
-                "The number of " + _file_map[_xsec_names[j]] + " values does not match "
-                "the num_groups/num_precursor_groups parameter.");
+            mooseError("The number of " + _file_map[_xsec_names[j]] +
+                       " values does not match "
+                       "the num_groups/num_precursor_groups parameter.");
           _xsec_map[_xsec_names[j]][k].push_back(value);
         }
       }
@@ -196,7 +199,8 @@ GenericMoltresMaterial::Construct(std::string & property_tables_root)
       if (num_lines != tempLength)
         // Catch edge cases occurring when the total number of values is divisible by an
         // erroneous num_groups/num_precursor_groups parameter.
-        mooseError("The number of " + _file_map[_xsec_names[j]] + " values does not match "
+        mooseError("The number of " + _file_map[_xsec_names[j]] +
+                   " values does not match "
                    "the num_groups/num_precursor_groups parameter.");
       oldtemperature = temperature;
       switch (_interp_type)
@@ -205,7 +209,8 @@ GenericMoltresMaterial::Construct(std::string & property_tables_root)
           if (tempLength > 1)
             // Reject if group constants provided at multiple temperatures for interp_type=none"
             mooseError(
-                _file_map[_xsec_names[j]] + " values provided at multiple temperatures with "
+                _file_map[_xsec_names[j]] +
+                " values provided at multiple temperatures with "
                 "interp_type=none. Remove extra temperature data or change interpolation scheme.");
           break;
         case LINEAR:
@@ -228,8 +233,7 @@ GenericMoltresMaterial::Construct(std::string & property_tables_root)
           for (decltype(o) k = 0; k < o; ++k)
           {
             _xsec_monotone_cubic_interpolators[_xsec_names[j]][k].setData(
-                temperature,
-                _xsec_map[_xsec_names[j]][k]);
+                temperature, _xsec_map[_xsec_names[j]][k]);
           }
           break;
       }

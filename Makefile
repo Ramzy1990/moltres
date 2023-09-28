@@ -26,30 +26,58 @@ include $(FRAMEWORK_DIR)/moose.mk
 
 ALL_MODULES                 := no
 
-CHEMICAL_REACTIONS          := no
-CONTACT                     := no
-ELECTROMAGNETICS            := no
-EXTERNAL_PETSC_SOLVER       := no
-FLUID_PROPERTIES            := no
-FSI                         := no
-FUNCTIONAL_EXPANSION_TOOLS  := no
-GEOCHEMISTRY                := no
-HEAT_CONDUCTION             := no
-LEVEL_SET                   := no
+OPTIMIZATION                := yes
+CHEMICAL_REACTIONS          := yes
+CONTACT                     := yes
+EXTERNAL_PETSC_SOLVER       := yes
+FLUID_PROPERTIES            := yes
+FUNCTIONAL_EXPANSION_TOOLS  := yes
+GEOCHEMISTRY                := yes
+HEAT_CONDUCTION             := yes
+LEVEL_SET                   := yes
 MISC                        := no
 NAVIER_STOKES               := yes
 OPTIMIZATION                := no
 PERIDYNAMICS                := no
 PHASE_FIELD                 := yes
-POROUS_FLOW                 := no
+POROUS_FLOW                 := yes
 RAY_TRACING                 := no
 REACTOR                     := yes
 RDG                         := no
 RICHARDS                    := no
-STOCHASTIC_TOOLS            := no
+STOCHASTIC_TOOLS            := yes
+TENSOR_MECHANICS            := yes
 THERMAL_HYDRAULICS          := no
-TENSOR_MECHANICS            := no
-XFEM                        := no
+FSI                         := yes
+XFEM                        := yes
+
+
+# CHEMICAL_REACTIONS          := yes
+# CONTACT                     := yes
+# ELECTROMAGNETICS            := yes
+# EXTERNAL_PETSC_SOLVER       := yes
+# FLUID_PROPERTIES            := yes
+# FSI                         := yes
+# FUNCTIONAL_EXPANSION_TOOLS  := yes
+# GEOCHEMISTRY                := yes
+# HEAT_CONDUCTION             := yes
+# LEVEL_SET                   := yes
+# MISC                        := yes
+# NAVIER_STOKES               := yes
+# OPTIMIZATION                := yes
+# PERIDYNAMICS                := yes
+# PHASE_FIELD                 := yes
+# POROUS_FLOW                 := yes
+# RAY_TRACING                 := yes
+# REACTOR                     := yes
+# RDG                         := yes
+# RICHARDS                    := yes
+# STOCHASTIC_TOOLS            := yes
+# THERMAL_HYDRAULICS          := yes
+# TENSOR_MECHANICS            := yes
+# XFEM                        := yes
+
+
 
 include $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
