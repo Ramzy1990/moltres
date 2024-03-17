@@ -270,74 +270,99 @@ class openmc_xs:
         import openmc.mgxs as mgxs
         if float(openmc.__version__[2:]) < 13.2:
             raise Exception("moltres_xs.py is compatible with OpenMC " +
-                            "v0.13.2 or later only.")
+                            "v0.14.0 or later only.")
 
-        groups = mgxs.EnergyGroups()
-        groups.group_edges = np.array(energy_groups)
-        big_group = mgxs.EnergyGroups()
+        groups = mgxs.EnergyGroups(group_edges=np.array(energy_groups))
+     #    groups.group_edges = np.array(energy_groups)
         big_energy_group = [energy_groups[0], energy_groups[-1]]
-        big_group.group_edges = np.array(big_energy_group)
         energy_filter = openmc.EnergyFilter(energy_groups)
+
+     #    big_group.group_edges = np.array(big_energy_group)
+        big_group = mgxs.EnergyGroups(group_edges=np.array(big_energy_group))
+
         domain_dict = {}
+
         for id in domain_ids:
             domain_dict[id] = {}
+
         for domain, id in zip(domains, domain_ids):
+
+            domain_dict[id]["tally"] = openmc.Tally(name=str(id) + " tally")
+
+            if isinstance(domain, openmc.Material):
+                domain_dict[id]["filter"] = openmc.MaterialFilter(domain)
+
+            elif isinstance(domain, openmc.Cell):
+                domain_dict[id]["filter"] = openmc.CellFilter(domain)
+
+            else:
+                domain_dict[id]["filter"] = openmc.MeshFilter(domain)
+
+            domain_dict[id]["tally"].filters = [
+                domain_dict[id]["filter"],
+                energy_filter]
+
+            domain_dict[id]["tally"].scores = [
+                "nu-fission",
+                "flux"]
+
+
+
             domain_dict[id]["beta"] = mgxs.Beta(
                 domain=domain,
                 energy_groups=big_group,
                 delayed_groups=delayed_groups,
                 name=str(id) + "_beta")
+
             domain_dict[id]["chi"] = mgxs.Chi(
                 domain=domain, energy_groups=groups, name=str(id) + "_chi")
+
             domain_dict[id]["chiprompt"] = mgxs.Chi(
                 domain=domain, energy_groups=groups,
                 name=str(id) + "_chiprompt", prompt=True)
+
             domain_dict[id]["chidelayed"] = mgxs.ChiDelayed(
                 domain=domain, energy_groups=groups,
                 name=str(id) + "_chidelayed")
+
             domain_dict[id]["decayrate"] = mgxs.DecayRate(
                 domain=domain,
                 energy_groups=big_group,
                 delayed_groups=delayed_groups,
                 name=str(id) + "_decayrate")
+
             domain_dict[id]["diffusioncoefficient"] = \
                 mgxs.DiffusionCoefficient(
                     domain=domain,
                     energy_groups=groups,
                     name=str(id) +
                     "_diffusioncoefficient")
+
             domain_dict[id]["scatterprobmatrix"] = \
                 mgxs.ScatterProbabilityMatrix(
                     domain=domain, energy_groups=groups,
                     name=str(id) + "_scatterprobmatrix")
+
             domain_dict[id]["scatterxs"] = mgxs.ScatterXS(
                 domain=domain, energy_groups=groups,
                 name=str(id) + "_scatterxs", nu=True)
+
             domain_dict[id]["inversevelocity"] = mgxs.InverseVelocity(
                 domain=domain, energy_groups=groups,
                 name=str(id) + "_inversevelocity")
+
             domain_dict[id]["fissionxs"] = mgxs.FissionXS(
                 domain=domain, energy_groups=groups,
                 name=str(id) + "_fissionxs")
+
             domain_dict[id]["kappafissionxs"] = mgxs.KappaFissionXS(
                 domain=domain, energy_groups=groups,
                 name=str(id) + "_kappafissionxs")
+
             domain_dict[id]["absorptionxs"] = mgxs.AbsorptionXS(
                 domain=domain, energy_groups=groups,
                 name=str(id) + "_absorptionxs")
-            domain_dict[id]["tally"] = openmc.Tally(name=str(id) + " tally")
-            if isinstance(domain, openmc.Material):
-                domain_dict[id]["filter"] = openmc.MaterialFilter(domain)
-            elif isinstance(domain, openmc.Cell):
-                domain_dict[id]["filter"] = openmc.CellFilter(domain)
-            else:
-                domain_dict[id]["filter"] = openmc.MeshFilter(domain)
-            domain_dict[id]["tally"].filters = [
-                domain_dict[id]["filter"],
-                energy_filter]
-            domain_dict[id]["tally"].scores = [
-                "nu-fission",
-                "flux"]
+
             tallies_file += domain_dict[id]["beta"].tallies.values()
             tallies_file += domain_dict[id]["chi"].tallies.values()
             tallies_file += domain_dict[id]["chiprompt"].tallies.values()
