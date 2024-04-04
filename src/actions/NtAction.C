@@ -36,6 +36,11 @@ NtAction::validParams()
   params.addRequiredParam<unsigned int>("num_groups", "The total number of energy groups.");
   params.addRequiredParam<bool>(
       "use_exp_form", "Whether concentrations should be in an exponential/logarithmic format.");
+  params.addParam<bool>(
+      "use_displaced_mesh",
+      false,
+      "Create the displaced mesh if the 'displacements' parameter is set. If this is 'false', a "
+      "displaced mesh will not be created, regardless of whether 'displacements' is set.");
   params.addParam<bool>("jac_test",
                         false,
                         "Whether we're testing the Jacobian and should use some "
@@ -147,6 +152,8 @@ NtAction::act()
         params.set<NonlinearVariableName>("variable") = var_name;
         if (isParamValid("use_exp_form"))
           params.set<bool>("use_exp_form") = getParam<bool>("use_exp_form");
+        if (isParamValid("use_displaced_mesh"))
+          params.set<bool>("use_displaced_mesh") = getParam<bool>("use_displaced_mesh");
         std::string bc_name = "VacuumConcBC_" + var_name;
         _problem->addBoundaryCondition("VacuumConcBC", bc_name, params);
       }
@@ -272,10 +279,11 @@ NtAction::addNtKernel(const unsigned & op,
   params.set<NonlinearVariableName>("variable") = var_name;
   params.set<unsigned int>("group_number") = op;
   if (isParamValid("block"))
-    params.set<std::vector<SubdomainName>>("block") =
-        getParam<std::vector<SubdomainName>>("block");
+    params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   if (isParamValid("use_exp_form"))
     params.set<bool>("use_exp_form") = getParam<bool>("use_exp_form");
+  if (isParamValid("use_displaced_mesh"))
+    params.set<bool>("use_displaced_mesh") = getParam<bool>("use_displaced_mesh");
   std::vector<std::string> include = {"temperature"};
   params.applySpecificParameters(parameters(), include);
   if (kernel_type == "InScatter")
@@ -297,10 +305,11 @@ NtAction::addCoupledFissionKernel(const unsigned & op,
   params.set<NonlinearVariableName>("variable") = var_name;
   params.set<unsigned int>("group_number") = op;
   if (isParamValid("block"))
-    params.set<std::vector<SubdomainName>>("block") =
-        getParam<std::vector<SubdomainName>>("block");
+    params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   if (isParamValid("use_exp_form"))
     params.set<bool>("use_exp_form") = getParam<bool>("use_exp_form");
+  if (isParamValid("use_displaced_mesh"))
+    params.set<bool>("use_displaced_mesh") = getParam<bool>("use_displaced_mesh");
   std::vector<std::string> include = {"temperature"};
   params.applySpecificParameters(parameters(), include);
   params.set<unsigned int>("num_groups") = _num_groups;
@@ -324,6 +333,8 @@ NtAction::addDelayedNeutronSource(const unsigned & op, const std::string & var_n
         getParam<std::vector<SubdomainName>>("pre_blocks");
   if (isParamValid("use_exp_form"))
     params.set<bool>("use_exp_form") = getParam<bool>("use_exp_form");
+  if (isParamValid("use_displaced_mesh"))
+    params.set<bool>("use_displaced_mesh") = getParam<bool>("use_displaced_mesh");
   std::vector<std::string> include = {"temperature", "pre_concs"};
   params.applySpecificParameters(parameters(), include);
   params.set<unsigned int>("num_precursor_groups") = _num_precursor_groups;
