@@ -26,56 +26,30 @@ include $(FRAMEWORK_DIR)/moose.mk
 
 ALL_MODULES                 := no
 
-OPTIMIZATION                := yes
-CHEMICAL_REACTIONS          := yes
-CONTACT                     := yes
+CHEMICAL_REACTIONS          := no
+CONTACT                     := no
+ELECTROMAGNETICS            := no
 EXTERNAL_PETSC_SOLVER       := yes
 FLUID_PROPERTIES            := yes
+FSI                         := yes
 FUNCTIONAL_EXPANSION_TOOLS  := yes
-GEOCHEMISTRY                := yes
+GEOCHEMISTRY                := no
 HEAT_TRANSFER               := yes
 LEVEL_SET                   := yes
 MISC                        := no
 NAVIER_STOKES               := yes
-OPTIMIZATION                := no
+OPTIMIZATION                := yes
 PERIDYNAMICS                := no
 PHASE_FIELD                 := yes
-POROUS_FLOW                 := yes
+POROUS_FLOW                 := no
 RAY_TRACING                 := no
 REACTOR                     := yes
 RDG                         := no
 RICHARDS                    := no
 STOCHASTIC_TOOLS            := yes
-SOLID_MECHANICS             := yes
 THERMAL_HYDRAULICS          := no
-FSI                         := yes
-XFEM                        := yes
-
-
-# CHEMICAL_REACTIONS          := yes
-# CONTACT                     := yes
-# ELECTROMAGNETICS            := yes
-# EXTERNAL_PETSC_SOLVER       := yes
-# FLUID_PROPERTIES            := yes
-# FSI                         := yes
-# FUNCTIONAL_EXPANSION_TOOLS  := yes
-# GEOCHEMISTRY                := yes
-# HEAT_CONDUCTION             := yes
-# LEVEL_SET                   := yes
-# MISC                        := yes
-# NAVIER_STOKES               := yes
-# OPTIMIZATION                := yes
-# PERIDYNAMICS                := yes
-# PHASE_FIELD                 := yes
-# POROUS_FLOW                 := yes
-# RAY_TRACING                 := yes
-# REACTOR                     := yes
-# RDG                         := yes
-# RICHARDS                    := yes
-# STOCHASTIC_TOOLS            := yes
-# THERMAL_HYDRAULICS          := yes
-# TENSOR_MECHANICS            := yes
-# XFEM                        := yes
+SOLID_MECHANICS             := yes
+XFEM                        := no
 
 
 

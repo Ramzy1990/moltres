@@ -7,11 +7,13 @@ FissionHeatSourceAux::validParams()
 {
   InputParameters params = AuxKernel::validParams();
   params.addRequiredParam<unsigned int>("num_groups", "The total numer of energy groups");
-  params.addRequiredCoupledVar("group_fluxes", "All the variables that hold the group fluxes. "
-                                               "These MUST be listed by decreasing "
-                                               "energy/increasing group number.");
+  params.addRequiredCoupledVar("group_fluxes",
+                               "All the variables that hold the group fluxes. "
+                               "These MUST be listed by decreasing "
+                               "energy/increasing group number.");
   params.addRequiredParam<PostprocessorName>(
-      "tot_fission_heat", "The total fission heat postprocessor that's used to normalize the heat source.");
+      "tot_fission_heat",
+      "The total fission heat postprocessor that's used to normalize the heat source.");
   params.addRequiredParam<Real>("power", "The reactor power.");
   return params;
 }
